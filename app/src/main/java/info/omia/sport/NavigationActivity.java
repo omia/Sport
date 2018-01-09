@@ -16,19 +16,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
 
+import java.io.IOException;
+
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TestAdapter sqladapter;
+    private DataBaseHelper dataBaseHelper;
 
     private RelativeLayout home;
     private RelativeLayout edit;
     private RelativeLayout show;
     private RelativeLayout settings;
 
-    //private SQLiteDatabase sql = SQLiteDatabase.openDatabase("")
-
+    //private SQLiteDatabase sql = openOrCreateDatabase("sport_demo.db",)
     private GridView edit_list;
 
     private String[] edit_buttons = {"edit_Klassen","edit_Schüler","edit_Daten","Create_Klassen","Create_Schüler","Create_Daten"};
@@ -63,7 +64,13 @@ public class NavigationActivity extends AppCompatActivity
         navigationView.setCheckedItem(R.id.menue_home);
 
 
-        sqladapter=new TestAdapter(this);
+        dataBaseHelper= new DataBaseHelper(this);
+        try {
+            dataBaseHelper.createDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        dataBaseHelper.openDataBase();
         home= findViewById(R.id.home_show);
         show= findViewById(R.id.show_show);
         edit= findViewById(R.id.edit_show);
@@ -78,9 +85,8 @@ public class NavigationActivity extends AppCompatActivity
         testbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sqladapter=sqladapter.open();
-                sqladapter.createDatabase();
-                testtext.append("\n"+sqladapter.getTestData("select * from Schueler"));
+
+                testtext.append("\n"+dataBaseHelper.getTestData("select * from Klassen").getString(0));
             }
         });
 
