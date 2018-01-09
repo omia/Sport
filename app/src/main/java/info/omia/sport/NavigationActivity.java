@@ -1,6 +1,7 @@
 package info.omia.sport;
 
 import android.annotation.SuppressLint;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,16 +20,21 @@ import android.widget.*;
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private TestAdapter sqladapter;
+
     private RelativeLayout home;
     private RelativeLayout edit;
     private RelativeLayout show;
     private RelativeLayout settings;
 
+    //private SQLiteDatabase sql = SQLiteDatabase.openDatabase("")
+
     private GridView edit_list;
 
     private String[] edit_buttons = {"edit_Klassen","edit_Schüler","edit_Daten","Create_Klassen","Create_Schüler","Create_Daten"};
 
-
+    private Button testbutton;
+    private EditText testtext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public class NavigationActivity extends AppCompatActivity
         navigationView.setCheckedItem(R.id.menue_home);
 
 
+        sqladapter=new TestAdapter(this);
         home= findViewById(R.id.home_show);
         show= findViewById(R.id.show_show);
         edit= findViewById(R.id.edit_show);
@@ -65,6 +72,17 @@ public class NavigationActivity extends AppCompatActivity
         edit_list= findViewById(R.id.edit_chose_show);
 
         edit_list.setAdapter(new ButtonAdapter(this,this,edit_buttons));
+
+        testtext=findViewById(R.id.text_test);
+        testbutton=findViewById(R.id.button_test);
+        testbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sqladapter=sqladapter.open();
+                sqladapter.createDatabase();
+                testtext.append("\n"+sqladapter.getTestData("select * from Schueler"));
+            }
+        });
 
     }
 
