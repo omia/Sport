@@ -44,7 +44,7 @@ public class ButtonAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             btn = new Button(mContext);
-            btn.setLayoutParams(new GridView.LayoutParams(100, 550));
+            btn.setLayoutParams(new GridView.LayoutParams(450, 550));
             btn.setPadding(8, 8, 8, 8);
         }
         else {

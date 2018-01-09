@@ -26,7 +26,7 @@ public class NavigationActivity extends AppCompatActivity
 
     private GridView edit_list;
 
-    private String[] edit_buttons = {"Klassen","Schüler","Daten","Klassen","Schüler","Daten"};
+    private String[] edit_buttons = {"edit_Klassen","edit_Schüler","edit_Daten","Create_Klassen","Create_Schüler","Create_Daten"};
 
 
 
@@ -133,5 +133,5 @@ public class NavigationActivity extends AppCompatActivity
         return true;
     }
 
-    public void buttonprest(String Name){}
+    public void buttonprest(String Name){System.out.println(Name);}
 }
