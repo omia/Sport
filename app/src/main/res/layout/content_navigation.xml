@@ -10,34 +10,162 @@
     tools:showIn="@layout/app_bar_navigation">
 
     <RelativeLayout
-        android:id="@+id/home_show"
+        android:id="@+id/edit_create_view_schueler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="144dp"
-        tools:layout_editor_absoluteY="134dp">
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="0dp">
 
-        <EditText
-            android:id="@+id/text_test"
+        <Button
+            android:id="@+id/create_schue_button"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:text="Einfügen" />
+
+        <Spinner
+            android:id="@+id/geschlecht_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="184dp" />
+
+        <Spinner
+            android:id="@+id/Klasse_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/create_schue_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="186dp"
-            android:ems="10"
-            android:inputType="textMultiLine" />
+            android:text="Daten zum erstellen eines Schülers angeben."
+            android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/button_test"
+        <EditText
+            android:id="@+id/editcreate_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/create_klass_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editcreate_vorname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editcreate_Name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="11dp"
+            android:ems="10"
+            android:hint="Vorname"
+            android:inputType="textPersonName" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/edit_create_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="89dp"
+        tools:layout_editor_absoluteY="176dp">
+
+        <TextView
+            android:id="@+id/create_klass_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="160dp"
-            android:layout_marginLeft="64dp"
-            android:layout_marginStart="64dp"
-            android:text="test" />
+            android:layout_alignParentTop="true"
+            android:text="Daten zum erstellen einer Klasse angeben. \n Wichtig Stufe als Nummer angeben! \n In Klasse/Kurs nur Buchtabe oder Kursbezeichnung"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/create_klasse_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editcreate_schüler"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="41dp"
+            android:text="Einfügen" />
+
+        <EditText
+            android:id="@+id/editcreate_stufe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editcreate_vorname"
+            android:layout_alignStart="@+id/editcreate_vorname"
+            android:layout_centerVertical="true"
+            android:ems="10"
+            android:hint="Stufe"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editcreate_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/create_klass_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="KlassenLehrer"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editcreate_vorname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editcreate_Name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="11dp"
+            android:ems="10"
+            android:hint="Vorname"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editcreate_schüler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editcreate_stufe"
+            android:layout_alignStart="@+id/editcreate_stufe"
+            android:layout_below="@+id/editcreate_stufe"
+            android:layout_marginTop="18dp"
+            android:ems="10"
+            android:hint="Anzahl der Schüler"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/create_klasse_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/create_klasse_button"
+            android:layout_alignStart="@+id/create_klasse_button"
+            android:layout_alignTop="@+id/create_klasse_button"
+            android:layout_marginTop="19dp"
+            android:text="Einfügen" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/home_show"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="134dp">
 
         <TextView
             android:id="@+id/text_home_info"
@@ -50,11 +178,128 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/edit_create_view_Klasse"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <TextView
+            android:id="@+id/create_klass_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Daten zum erstellen einer Klasse angeben. \n Wichtig Stufe als Nummer angeben! \n In Klasse/Kurs eine unverwechselbare bezeichnung angeben!"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/create_klasse_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editcreate_schüler"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="41dp"
+            android:text="Einfügen" />
+
+        <EditText
+            android:id="@+id/editcreate_stufe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editcreate_vorname"
+            android:layout_alignStart="@+id/editcreate_vorname"
+            android:layout_centerVertical="true"
+            android:ems="10"
+            android:hint="Stufe"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editcreate_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/create_klass_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="KlassenLehrer"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editcreate_vorname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editcreate_Name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="11dp"
+            android:ems="10"
+            android:hint="Klasse/Kurs z.b. b"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editcreate_schüler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editcreate_stufe"
+            android:layout_alignStart="@+id/editcreate_stufe"
+            android:layout_below="@+id/editcreate_stufe"
+            android:layout_marginTop="18dp"
+            android:ems="10"
+            android:hint="Anzahl der Schüler"
+            android:inputType="number" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/show_show"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible">
 
+        <Spinner
+            android:id="@+id/show_spin3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="112dp"
+            android:layout_marginRight="112dp" />
+
+        <Button
+            android:id="@+id/show_but1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="21dp"
+            android:text="GetInfo" />
+
+        <Spinner
+            android:id="@+id/show_spin2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_toLeftOf="@+id/show_spin3"
+            android:layout_toStartOf="@+id/show_spin3" />
+
+        <Spinner
+            android:id="@+id/show_spin1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/show_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/show_but1"
+            android:text="TextView" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -85,7 +330,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:visibility="invisible"
-        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="0dp">
 
     </RelativeLayout>

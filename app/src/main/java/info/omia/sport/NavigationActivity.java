@@ -1,6 +1,7 @@
 package info.omia.sport;
 
 import android.annotation.SuppressLint;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -29,13 +30,33 @@ public class NavigationActivity extends AppCompatActivity
     private RelativeLayout show;
     private RelativeLayout settings;
 
-    //private SQLiteDatabase sql = openOrCreateDatabase("sport_demo.db",)
+    private RelativeLayout createschue;
+    private Button createschueb;
+    private TextView createschueT;
+    private EditText namet;
+    private EditText vornamet;
+    private Spinner klasses;
+    private Spinner geschlechts;
+
+    private RelativeLayout createKlasse;
+    private Button createklasb;
+    private TextView createklasT;
+
     private GridView edit_list;
 
     private String[] edit_buttons = {"edit_Klassen","edit_Schüler","edit_Daten","Create_Klassen","Create_Schüler","Create_Daten"};
+    private String[] geschlecht_spinner = new String[] {"male", "female"};
+    private ArrayAdapter<String> spinnerAdapterklassecre;
 
-    private Button testbutton;
-    private EditText testtext;
+    private Spinner showspin1;
+    private Spinner showspin2;
+    private Spinner showspin3;
+    private ArrayAdapter<String> shoespinnadap1;
+    private ArrayAdapter<String> shoespinnadap2;
+    private ArrayAdapter<String> shoespinnadap3;
+    private Button showbut;
+    private TextView showText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +64,6 @@ public class NavigationActivity extends AppCompatActivity
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -76,20 +87,96 @@ public class NavigationActivity extends AppCompatActivity
         edit= findViewById(R.id.edit_show);
         settings= findViewById(R.id.settings_show);
 
-        edit_list= findViewById(R.id.edit_chose_show);
-
-        edit_list.setAdapter(new ButtonAdapter(this,this,edit_buttons));
-
-        testtext=findViewById(R.id.text_test);
-        testbutton=findViewById(R.id.button_test);
-        testbutton.setOnClickListener(new View.OnClickListener() {
+        createschue= findViewById(R.id.edit_create_view_schueler);
+        createschueT=findViewById(R.id.create_schue_text);
+        geschlechts= findViewById(R.id.geschlecht_spinner);
+        namet= findViewById(R.id.editcreate_Name);
+        vornamet= findViewById(R.id.editcreate_vorname);
+        ArrayAdapter<String> adaptergeschl = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, geschlecht_spinner);
+        adaptergeschl.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        geschlechts.setAdapter(adaptergeschl);
+        createschueb=findViewById(R.id.create_schue_button);
+        klasses= findViewById(R.id.Klasse_spinner);
+        spinnerAdapterklassecre = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+        spinnerAdapterklassecre.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        klasses.setAdapter(spinnerAdapterklassecre);
+        final int[] createschue = {0};
+        createschueb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                testtext.append("\n"+dataBaseHelper.getTestData("select * from Klassen").getString(0));
+                if (createschue[0] ==0) {
+                    if (namet.getText() == null || namet.getText().equals("")) {
+                        createklasT.setText(null);
+                        createklasT.append("Name fehlt! \n");
+                        createschue[0] =-1;
+                    }
+                    if (vornamet.getText() == null|| vornamet.getText().equals("")) {
+                        createklasT.append("Vorname fehlt! \n");
+                        createschue[0] =-1;
+                    }
+                    if (createschue[0]==0){
+                        createklasT.setText(null);createklasT.append("Beim naechsten drücken des Knopfen werden die Daten eingespeichert");
+                        createschue[0]=1;
+                    }
+                }else if (createschue[0]==1){
+                    //TODO insert into sql
+                    createschue[0]=0;
+                    hideall();
+                    edit.setVisibility(View.VISIBLE);
+                }
             }
         });
 
+        //System.out.println(cursorToString(dataBaseHelper.getTestData("select * from sportdata")));
+
+        createKlasse= findViewById(R.id.edit_create_view_Klasse);
+        createklasb= findViewById(R.id.create_klasse_button);
+        createklasb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        createklasT= findViewById(R.id.create_klass_text);
+
+        edit_list= findViewById(R.id.edit_chose_show);
+
+        edit_list.setAdapter(new ButtonAdapter(this,this,edit_buttons));
+        home.setVisibility(View.VISIBLE);
+
+
+        showspin1=findViewById(R.id.show_spin1);
+        shoespinnadap1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+        shoespinnadap1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        showspin1.setAdapter(shoespinnadap1);
+
+        showspin2=findViewById(R.id.show_spin2);
+        shoespinnadap2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+        shoespinnadap2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        showspin2.setAdapter(shoespinnadap2);
+
+        showspin3=findViewById(R.id.show_spin3);
+        shoespinnadap3 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+        shoespinnadap3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        showspin3.setAdapter(shoespinnadap3);
+
+        showText=findViewById(R.id.show_table);
+        showbut=findViewById(R.id.show_but1);
+        showbut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showText.setText(null);
+                String Stufe = showspin1.getSelectedItem().toString();
+                String Sport = showspin2.getSelectedItem().toString();
+                String gesch = showspin3.getSelectedItem().toString();
+
+                showText.setText(cursorToTable(dataBaseHelper.getTestData("select  Info,Wert,Punkte as Notenpunkte from sportdata where stufe='"+Stufe+"' and sportart='"+Sport+"' and geschlecht='"+gesch+"'")));
+            }
+        });
+
+
+        update();
     }
 
     @Override
@@ -131,24 +218,16 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menue_home){
+            hideall();
             home.setVisibility(View.VISIBLE);
-            show.setVisibility(View.INVISIBLE);
-            edit.setVisibility(View.INVISIBLE);
-            settings.setVisibility(View.INVISIBLE);
         } else if (id == R.id.menue_show) {
-            home.setVisibility(View.INVISIBLE);
+            hideall();
             show.setVisibility(View.VISIBLE);
-            edit.setVisibility(View.INVISIBLE);
-            settings.setVisibility(View.INVISIBLE);
         } else if (id == R.id.menue_edit) {
-            home.setVisibility(View.INVISIBLE);
-            show.setVisibility(View.INVISIBLE);
+            hideall();
             edit.setVisibility(View.VISIBLE);
-            settings.setVisibility(View.INVISIBLE);
         } else if (id == R.id.menue_edit) {
-            home.setVisibility(View.INVISIBLE);
-            show.setVisibility(View.INVISIBLE);
-            edit.setVisibility(View.INVISIBLE);
+            hideall();
             settings.setVisibility(View.VISIBLE);
         }
 
@@ -157,5 +236,77 @@ public class NavigationActivity extends AppCompatActivity
         return true;
     }
 
-    public void buttonprest(String Name){System.out.println(Name);}
+    private void hideall(){
+        home.setVisibility(View.INVISIBLE);
+        show.setVisibility(View.INVISIBLE);
+        edit.setVisibility(View.INVISIBLE);
+        settings.setVisibility(View.INVISIBLE);
+        createschue.setVisibility(View.INVISIBLE);
+        createKlasse.setVisibility(View.INVISIBLE);
+
+    }
+
+    private void update(){
+        removeallinfo();
+        spinnerAdapterklassecre.clear();
+        addcursertospinner(spinnerAdapterklassecre,dataBaseHelper.getTestData("select klasse from klassen"));
+
+
+        shoespinnadap1.clear();
+        shoespinnadap2.clear();
+        shoespinnadap3.clear();
+        addcursertospinner(shoespinnadap1,dataBaseHelper.getTestData("select distinct stufe from sportdata"));
+        addcursertospinner(shoespinnadap2,dataBaseHelper.getTestData("select distinct Sportart from sportdata"));
+        addcursertospinner(shoespinnadap3,dataBaseHelper.getTestData("select distinct Geschlecht from sportdata"));
+    }
+
+    private void removeallinfo(){
+        createschueT.setText(null);
+        createschueT.append("Daten zum erstellen eines Schülers angeben.");
+        namet.setText(null);
+        vornamet.setText(null);
+        showText.setText(null);
+
+    }
+
+
+    public void buttonprest(String Name){
+        System.out.println(Name);
+        hideall();
+        switch (Name){
+            case "edit_Klassen":break;
+            case "edit_Schüler":break;
+            case "edit_Daten":break;
+            case "Create_Klassen":createKlasse.setVisibility(View.VISIBLE);break;
+            case "Create_Schüler":createschue.setVisibility(View.VISIBLE);break;
+            case "Create_Daten":break;
+        }
+        }
+
+    private String cursorToTable(Cursor cursor){
+        String cursorString = "";
+        if (cursor.moveToFirst() ){
+            String[] columnNames = cursor.getColumnNames();
+            for (String name: columnNames)
+                cursorString += " [ "+String.format("%s ]", name);
+            cursorString += "\n";
+            do {
+                for (String name: columnNames) {
+                    cursorString += " [ "+String.format("%s ]",
+                            cursor.getString(cursor.getColumnIndex(name)));
+                }
+                cursorString += "\n";
+            } while (cursor.moveToNext());
+        }
+        return cursorString;
+    }
+
+    private void addcursertospinner(ArrayAdapter Spinner,Cursor cursor){
+        if (cursor.moveToFirst() ){
+            String[] columnNames = cursor.getColumnNames();
+            for (String name: columnNames)do {Spinner.add(cursor.getString(cursor.getColumnIndex(name)));}while (cursor.moveToNext());
+
+        }
+    }
 }
+
