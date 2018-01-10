@@ -1,11 +1,7 @@
 package info.omia.sport;
 
-import android.annotation.SuppressLint;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -41,6 +37,10 @@ public class NavigationActivity extends AppCompatActivity
     private RelativeLayout createKlasse;
     private Button createklasb;
     private TextView createklasT;
+    private EditText creaklasstufe;
+    private EditText creaklaslehr;
+    private EditText createklasklass;
+    private EditText createklassschun;
 
     private GridView edit_list;
 
@@ -88,16 +88,16 @@ public class NavigationActivity extends AppCompatActivity
         settings= findViewById(R.id.settings_show);
 
         createschue= findViewById(R.id.edit_create_view_schueler);
-        createschueT=findViewById(R.id.create_schue_text);
-        geschlechts= findViewById(R.id.geschlecht_spinner);
-        namet= findViewById(R.id.editcreate_Name);
-        vornamet= findViewById(R.id.editcreate_vorname);
+        createschueT=findViewById(R.id.create_schue_textdd);
+        geschlechts= findViewById(R.id.geschlecht_spinnerdd);
+        namet= findViewById(R.id.editcreate_Namedd);
+        vornamet= findViewById(R.id.editcreate_vornamedd);
         ArrayAdapter<String> adaptergeschl = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, geschlecht_spinner);
         adaptergeschl.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         geschlechts.setAdapter(adaptergeschl);
         createschueb=findViewById(R.id.create_schue_button);
-        klasses= findViewById(R.id.Klasse_spinner);
+        klasses= findViewById(R.id.Klasse_spinnerdd);
         spinnerAdapterklassecre = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
         spinnerAdapterklassecre.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         klasses.setAdapter(spinnerAdapterklassecre);
@@ -106,40 +106,81 @@ public class NavigationActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 if (createschue[0] ==0) {
-                    if (namet.getText() == null || namet.getText().equals("")) {
-                        createklasT.setText(null);
-                        createklasT.append("Name fehlt! \n");
+                     if (namet.getText() == null || namet.getText().equals("")) {
+                        System.out.println("test");
+                        createschueT.setText("Name fehlt! \n");
                         createschue[0] =-1;
                     }
                     if (vornamet.getText() == null|| vornamet.getText().equals("")) {
-                        createklasT.append("Vorname fehlt! \n");
+                        System.out.println("test2");
+                        createschueT.setText("Vorname fehlt! \n");
                         createschue[0] =-1;
                     }
                     if (createschue[0]==0){
-                        createklasT.setText(null);createklasT.append("Beim naechsten drücken des Knopfen werden die Daten eingespeichert");
+                        System.out.println("test");
+                        createschueT.setText("Beim naechsten drücken des Knopfen werden die Daten eingespeichert");
                         createschue[0]=1;
                     }
                 }else if (createschue[0]==1){
-                    //TODO insert into sql
+                    String stufe = dataBaseHelper.getTestData("select Stufe from Klassen where klasse='"+klasses.getSelectedItem().toString()+"'").getString(0);
+                    dataBaseHelper.getTestData("insert into schueler(name,vorname,klasse,geschlecht,stufe) values('"+namet.getText()+"','"+vornamet.getText()+"',"+klasses.getSelectedItem().toString()+",'"+geschlechts.getSelectedItem().toString()+"','"+stufe+"'); ");
                     createschue[0]=0;
                     hideall();
+                    update();
                     edit.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        //System.out.println(cursorToString(dataBaseHelper.getTestData("select * from sportdata")));
+        createKlasse= findViewById(R.id.edit_create_view_Klassekl);
+        creaklasstufe=findViewById(R.id.editcreate_stufess);
+       creaklaslehr=findViewById(R.id.editcreate_lehrer);
 
-        createKlasse= findViewById(R.id.edit_create_view_Klasse);
-        createklasb= findViewById(R.id.create_klasse_button);
+        createklasklass=findViewById(R.id.editcreate_klasse);
+        createklassschun=findViewById(R.id.editcreate_schülerss);
+
+        createklasT= findViewById(R.id.create_klass_textss);
+        createklasb= findViewById(R.id.create_klasse_klsbutton);
+        final int[] createklas = {0};
         createklasb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-            }
-        });
-        createklasT= findViewById(R.id.create_klass_text);
-
+                System.out.print("huhu");
+                if (createklas[0] == 0) {
+                    if (creaklasstufe.getText() == null || creaklasstufe.getText().equals("")) {
+                        System.out.println("test");
+                        createklasT.setText("Stufe fehlt! \n");
+                        createklas[0] = -1;
+                    }
+                    if (creaklaslehr.getText() == null || creaklaslehr.getText().equals("")) {
+                        System.out.println("test2");
+                        createklasT.setText("Lehrer fehlt! \n");
+                        createklas[0] = -1;
+                    }
+                    if (createklasklass.getText() == null || createklasklass.getText().equals("")) {
+                        System.out.println("test");
+                        createklasT.setText("Klasse fehlt! \n");
+                        createklas[0] = -1;
+                    }
+                    if (createklassschun.getText() == null || createklassschun.getText().equals("")) {
+                        System.out.println("test2");
+                        createklasT.setText("Schülernummer fehlt! \n");
+                        createklas[0] = -1;
+                    }
+                    if (createklas[0] == 0) {
+                        System.out.println("test");
+                        createklasT.setText("Beim naechsten drücken des Knopfen werden die Daten eingespeichert");
+                        createklas[0] = 1;
+                    }
+                } else if (createklas[0] == 1) {
+                    dataBaseHelper.getTestData("insert into klassen(klasse,Lehrer,Schüler,stufe) values('" + createklasklass.getText() + "','" + creaklaslehr.getText() + "','" + createklassschun.getText().toString() + "','" + creaklasstufe.getText().toString() +"'); ");
+                    createklas[0] = 0;
+                    hideall();
+                    update();
+                    edit.setVisibility(View.VISIBLE);
+                }
+            }}
+        );
         edit_list= findViewById(R.id.edit_chose_show);
 
         edit_list.setAdapter(new ButtonAdapter(this,this,edit_buttons));
